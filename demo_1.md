@@ -10,5 +10,16 @@ Write a function to determine if a number divides itself.
 ```
 
 **Understand**
+- should we deal with non numeric values? leave up to engineer
+- how should we handle decimal values? we should only take in int
+- what should this function return? True or False
 
 **Plan**
+# loop through the digits in the number
+# - use % to get the rightmost digit
+# - use / to discard the rightmost
+# - if dividing by the single digit leaves a remainder return false
+# - if the digit is a zero return false
+
+# - if the loop exits without returning false then return true
+
