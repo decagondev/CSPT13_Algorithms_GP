@@ -1,6 +1,6 @@
 # Agenda
 
-## Day 1
+## First Pass Solutions
 - Demo "Asking for help"
 - Breakout Rooms
 - 5 min break
