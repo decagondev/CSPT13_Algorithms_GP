@@ -20,29 +20,44 @@ Write a function to determine if a number divides itself.
 
 # - if the loop exits without returning false then return true
 
-def divides_self(num):
-    # TODO: find the bug...
-    # set a temp variable to hold the number
-    value = num
-    # Loop over the digits in the number
-    # while the value is not zero
-    while value > 0:
-        # extract the single digit by modding the value by 10
-        print(digit)
-        digit = int(value % 10)
-
-        # check if the digit is zero or if the num mod the digit is not zero
-        if digit == 0 or num % digit != 0:
-            # return False
-            return False
+# def divides_self(num):
+#     # TODO: find the bug...
+#     # set a temp variable to hold the number
+#     value = num
+#     # Loop over the digits in the number
+#     # check if the num mod 10 is zero
+#     if num % 10 == 0:
+#         # return False
+#         return False
+#     # while the num is not zero
+#     while num != 0:
+#         # check if our value moded against our num modded against 10 is not zero
+#         if value % (num % 10) != 0:
+#             # return False
+#             return False
         
-        # divide our value by 10 to make sure we do not get an infinite loop
-        value /= 10
+#         # divide our value by 10 to make sure we do not get an infinite loop
+#         value //= 10
 
-    # return True
+#     # return True
+#     return True
+
+# anonymous student submission
+def divides_self(num):
+    value = [int(x) for x in str(num)]
+    for v in value:
+        if v == 0 or num % v != 0:
+            return False
     return True
 
-
+def mannie_divides_self(num):  
+    value = num
+    while value != 0:
+        digit = int(value % 10)
+        if digit ==  0 or num % digit != 0:
+            return False
+        value = value // 10
+    return True
 print(divides_self(128))  # > True
 print(divides_self(12))  # > True
 print(divides_self(120)) # > False
