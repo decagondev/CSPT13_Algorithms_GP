@@ -83,7 +83,58 @@ def dp_scavenging(field):
     Subpaths on the eastern side of the field that we visited multiple times
     in the naive approach are only visited once using dynamic programming.
     '''
-    pass
+
+    gold_cache = [[0 for _ in range(len(field))]  for _ in range(len(field))]
+    path_cache = [["" for _ in range(len(field))] for _ in range(len(field))]
+    
+    field_length = len(field)
+
+    for col in range(field_length - 1, -1, -1):
+        for row in range(field_length):
+            east = 0
+            northeast = 0
+            southeast = 0
+
+            # look at gold collected if we chose east
+            if col != field_length - 1:
+                east = gold_cache[row][col + 1]
+
+            # look at the gold collected if we chose northeast
+            if row != 0 and col != field_length - 1:
+                northeast = gold_cache[row - 1][col + 1]
+
+            # look at the gold collected if we chose southeast
+            if row != field_length - 1 and col != field_length - 1:
+                southeast = gold_cache[row + 1][col + 1]
+            
+            # update the cache with how much gold we collected from choosing
+            # the path that will lead to the most gold + the gold from the location
+            # we are currently standing in
+            # my reasoning for not using a max function is so that my max can keep track
+            # of the path that we follow to find the gold
+
+            if east > northeast and east > southeast:
+                gold_cache[row][col] += field[row][col] + east
+                if col < field_length - 1:
+                    path_cache[row][col] += "e, " + path_cache[row][col + 1]
+            elif northeast > east and northeast > southeast:
+                gold_cache[row][col] += field[row][col] + northeast
+                if col < field_length - 1:
+                    path_cache[row][col] += "ne, " + path_cache[row - 1][col + 1]
+            else:
+                gold_cache[row][col] += field[row][col] + southeast
+                if col < field_length - 1 and row < field_length - 1:
+                    path_cache[row][col] += "se, " + path_cache[row + 1][col + 1]
+            
+        
+    # because we are rquired to start in the northwest corner, 
+    # the max gold collected will be the val and the path start at [0][0]
+
+    num_gold = gold_cache[0][0]
+    path = path_cache[0][0].split(",")
+    path.pop()
+
+    return f"{num_gold} can be aquired by moving \t{path}"
 
 
 def print_field(field, label):
@@ -131,12 +182,12 @@ print(f'{naive_scavenging(small_field)}')
 print(f'\nResult calculated in {time.time()-start:.5f} seconds')
 print('\n--------------------------------\n')
 
-# Test 2 - Naive
-print('Starting test 2, naive approach...\ncrossing large field...\n')
-start = time.time()
-print(f'\n{naive_scavenging(large_field)}')
-print(f'\nResult calculated in {time.time()-start:.5f} seconds')
-print('\n--------------------------------\n')
+# # Test 2 - Naive
+# print('Starting test 2, naive approach...\ncrossing large field...\n')
+# start = time.time()
+# print(f'\n{naive_scavenging(large_field)}')
+# print(f'\nResult calculated in {time.time()-start:.5f} seconds')
+# print('\n--------------------------------\n')
 
 # Test 3 - Dynamic Programming
 print('Starting test 3, dynamic programming...\ncrossing small field...\n')
