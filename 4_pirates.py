@@ -36,10 +36,42 @@ def naive_scavenging(field):
     '''
     # generate all possible permutations of 'ne', 'e' or 'se' movements 
     # that get a person across the field
+    list_of_perms = list(product(['ne', 'e', 'se'], repeat=len(field) - 1))
     
     # TODO - which function in Python's `itertools` module can we use
     # to generate all possible paths?
-    pass
+    output = ""
+    max_gold = 0
+
+    for perm in list_of_perms:
+        total_gold = field[0][0]  # how we will access the field in 2d list notation
+        col = 0
+        row = 0
+
+        for direction in perm:
+            if direction == "se":
+                # break if impossible move?
+                if row >= len(field) - 1:
+                    break
+                else:
+                    row += 1
+            elif direction == "ne":
+                # break if impossible move?
+                if row <= 0:
+                    break
+                else:
+                    row -= 1
+
+            # update position and add gold at the current coordinates
+            col += 1
+            total_gold += field[row][col]
+
+        # after getting to the edge of the field, check if this path had more gold than prev path
+        if total_gold > max_gold:
+            max_gold = total_gold
+            output = f"{max_gold} can be aquired by moving \t{perm}"
+
+    return output
 
 
 def dp_scavenging(field):
