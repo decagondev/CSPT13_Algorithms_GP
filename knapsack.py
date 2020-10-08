@@ -168,12 +168,12 @@ start = time.time()
 knapsack = brute_force_fill_knapsack(knapsack, items)
 print_results(items, knapsack)
 
-# # Test 3 - Brute Force
-# print('Starting test 3, brute force...')
-# items = large_cave
-# start = time.time()
-# knapsack = brute_force_fill_knapsack(knapsack, items)
-# print_results(items, knapsack)
+# Test 3 - Brute Force
+print('Starting test 3, brute force...')
+items = large_cave
+start = time.time()
+knapsack = brute_force_fill_knapsack(knapsack, items)
+print_results(items, knapsack)
 
 # Test 4 - Greedy
 print('Starting test 4, greedy approach...')
